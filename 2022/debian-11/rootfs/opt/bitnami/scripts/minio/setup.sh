@@ -60,4 +60,13 @@ else
 
     # Create default buckets
     minio_create_default_buckets
+
+    if 
+
+    if is_empty_value ${MIRROR_SERVER_URL:}; then 
+        . /opt/bitnami/scripts/libminioclient.sh
+        minio_client_execute alias set minio1 ${MINIO_SERVER_URL} ${MINIO_ROOT_USER} ${MINIO_ROOT_PASSWORD}
+        minio_client_execute alias set minio2 ${MIRROR_SERVER_URL} ${MINIO_ROOT_USER} ${MINIO_ROOT_PASSWORD}
+        minio_client_execute admin replicate add minio1 minio2
+    fi
 fi
